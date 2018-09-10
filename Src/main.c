@@ -145,9 +145,27 @@ Node* at(List* list, int index)
     }
       
     node = node->next_node;
+    i++;
   }
 
   return NULL;
+}
+
+int emplace(List* list, int index,int data)
+{
+  Node* node = at(list,index);
+  if(node == NULL)
+  {
+    return 1;
+  }
+
+  Node* new_node = (Node *)malloc(sizeof(Node));
+  new_node->data = data;
+  list->elem_count++;
+
+  Node* nextNode = node->next_node;
+  node->next_node = new_node;
+  new_node->next_node = nextNode;
 }
 
 int main()
@@ -165,6 +183,7 @@ int main()
     printf("4 - Pop front\n");
     printf("5 - Find by value\n");
     printf("6 - Find by index\n");
+    printf("7 - Emplace by index\n");
     printf("\n");
     scanf("%d",&input); 
     switch(input)
@@ -225,6 +244,17 @@ int main()
           {
             printf("Element found : %d", node->data);
           }
+        }
+        break;
+      case 7:
+        {
+          int index = 0;
+          int data = 0;
+          printf("Index :");
+          scanf("%d", &index);
+          printf("Data :");
+          scanf("%d", &data);
+          emplace(list,index,data);
         }
         break;
     }
